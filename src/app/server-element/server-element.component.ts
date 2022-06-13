@@ -10,7 +10,10 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ViewChild,
+  ElementRef,
+  ContentChild
 } from '@angular/core';
 
 @Component({
@@ -27,9 +30,11 @@ export class ServerElementComponent implements
   AfterContentChecked,
   AfterViewInit,
   AfterViewChecked,
-  OnDestroy{
-  @Input('srvElement') element: { type: string, name: string, content: string};
+  OnDestroy {
+  @Input('srvElement') element: { type: string, name: string, content: string };
   @Input() name: string;
+  @ViewChild('heading', { static: true }) header: ElementRef;
+  @ContentChild('contentParagraph', {static: true}) paragraph: ElementRef
 
   constructor() { 
     console.log('constructor called!')
@@ -41,7 +46,9 @@ export class ServerElementComponent implements
   }
 
   ngOnInit() {
-    console.log('ngOnit Called!')
+    console.log('ngOnit Called!');
+    console.log('text: ' + this.header.nativeElement.textContent);
+    console.log('text of graph: ' + this.paragraph.nativeElement.textContent)
   }
 
   ngDoCheck() {
@@ -49,23 +56,25 @@ export class ServerElementComponent implements
   }
 
   ngAfterContentInit() {
-      console.log('ngAfterContentInit called!')
+    console.log('ngAfterContentInit called!');
+    console.log('text of graph: ' + this.paragraph.nativeElement.textContent)
   }
 
   ngAfterContentChecked() {
     console.log('ngAfterContentChecked called!')
 }
 
-ngAfterViewInit() {
-  console.log('ngAfterView Init called!')
-}
-
-ngAfterViewChecked() {
-console.log('ngAfterViewChecked called!')
-}
-  
-ngOnDestroy() {
-    console.log('ngOnDestroy called!')
+  ngAfterViewInit() {
+    console.log('ngAfterView Init called!');
+    console.log('text: ' + this.header.nativeElement.textContent)
   }
-  
+
+  ngAfterViewChecked() {
+  console.log('ngAfterViewChecked called!')
+  }
+    
+  ngOnDestroy() {
+      console.log('ngOnDestroy called!')
+    }
+    
 }
